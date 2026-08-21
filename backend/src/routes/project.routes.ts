@@ -30,8 +30,8 @@ function validateCreateProjectInput(payload: unknown): CreateProjectInput {
 
   return {
     idea,
-    title,
-    durationSeconds
+    ...(title ? { title } : {}),
+    ...(durationSeconds !== undefined ? { durationSeconds } : {})
   };
 }
 
