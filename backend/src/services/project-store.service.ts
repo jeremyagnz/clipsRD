@@ -1,5 +1,5 @@
 import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { isAbsolute, join, relative, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 
 import { logger } from '../lib/logger.js';
@@ -29,8 +29,27 @@ function createProjectTitle(input: CreateProjectInput): string {
   return compactIdea.length > 80 ? `${compactIdea.slice(0, 77)}...` : compactIdea;
 }
 
+function isValidProjectId(projectId: string): boolean {
+  return /^[a-z0-9-]{3,80}$/.test(projectId);
+}
+
 export class ProjectStoreService {
   constructor(private readonly projectsRoot: string) {}
+
+  private resolveProjectRoot(projectId: string): string {
+    if (!isValidProjectId(projectId)) {
+      throw new Error('Identificador de proyecto inválido.');
+    }
+
+    const projectRoot = resolve(this.projectsRoot, projectId);
+    const relativePath = relative(this.projectsRoot, projectRoot);
+
+    if (relativePath.startsWith('..') || isAbsolute(relativePath)) {
+      throw new Error('La ruta del proyecto es inválida.');
+    }
+
+    return projectRoot;
+  }
 
   async ensureReady(): Promise<void> {
     await mkdir(this.projectsRoot, { recursive: true });
@@ -57,7 +76,7 @@ export class ProjectStoreService {
   }
 
   async getProject(projectId: string): Promise<VideoProject> {
-    const projectPath = join(this.projectsRoot, projectId, 'project.json');
+    const projectPath = join(this.resolveProjectRoot(projectId), 'project.json');
     const content = await readFile(projectPath, 'utf8');
     return JSON.parse(content) as VideoProject;
   }
@@ -123,7 +142,7 @@ export class ProjectStoreService {
 
   async hasProject(projectId: string): Promise<boolean> {
     try {
-      const projectDirectory = resolve(this.projectsRoot, projectId);
+      const projectDirectory = this.resolveProjectRoot(projectId);
       const details = await stat(projectDirectory);
       return details.isDirectory();
     } catch {
