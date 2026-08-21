@@ -13,6 +13,7 @@ Esta primera entrega **no implementa todavía el pipeline completo**. Queda resu
 - interfaces compartidas para IA y proyectos;
 - persistencia por archivos JSON;
 - API básica con `health check`;
+- motor de generación de guion con Ollama y validación de JSON;
 - preparación del frontend para Netlify.
 
 ## Arquitectura propuesta
@@ -106,6 +107,7 @@ PORT=3000
 CORS_ORIGIN=http://localhost:4200
 PROJECTS_ROOT=
 OLLAMA_BASE_URL=http://127.0.0.1:11434
+OLLAMA_MODEL=llama3.1:8b
 PIPER_BINARY_PATH=/usr/local/bin/piper
 IMAGE_PROVIDER_MODE=local
 ```
@@ -190,6 +192,7 @@ Respuesta esperada:
 - `GET /api/projects`
 - `GET /api/projects/:projectId`
 - `POST /api/projects`
+- `POST /api/script/generate`
 
 Ejemplo mínimo de creación:
 
@@ -199,6 +202,25 @@ Ejemplo mínimo de creación:
   "durationSeconds": 60
 }
 ```
+
+### Generación de guion
+
+`POST /api/script/generate`
+
+Ejemplo mínimo:
+
+```json
+{
+  "projectId": "mi-proyecto-abc12345",
+  "prompt": "Explica un misterio real del océano con ritmo y cierre natural.",
+  "language": "es",
+  "duration": 60,
+  "niche": "ciencia",
+  "tone": "intrigante"
+}
+```
+
+El backend genera 5 hooks, selecciona el de mayor potencial de retención, construye el guion estructurado y persiste el resultado en `generated/projects/{projectId}/script.json`.
 
 ## Netlify
 

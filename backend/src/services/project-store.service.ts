@@ -51,6 +51,10 @@ export class ProjectStoreService {
     return projectRoot;
   }
 
+  private resolveProjectFile(projectId: string, fileName: string): string {
+    return join(this.resolveProjectRoot(projectId), fileName);
+  }
+
   async ensureReady(): Promise<void> {
     await mkdir(this.projectsRoot, { recursive: true });
   }
@@ -76,9 +80,20 @@ export class ProjectStoreService {
   }
 
   async getProject(projectId: string): Promise<VideoProject> {
-    const projectPath = join(this.resolveProjectRoot(projectId), 'project.json');
+    const projectPath = this.resolveProjectFile(projectId, 'project.json');
     const content = await readFile(projectPath, 'utf8');
     return JSON.parse(content) as VideoProject;
+  }
+
+  async getScript(projectId: string): Promise<ProjectScript> {
+    const scriptPath = this.resolveProjectFile(projectId, 'script.json');
+    const content = await readFile(scriptPath, 'utf8');
+    return JSON.parse(content) as ProjectScript;
+  }
+
+  async saveScript(projectId: string, script: ProjectScript): Promise<void> {
+    const scriptPath = this.resolveProjectFile(projectId, 'script.json');
+    await writeFile(scriptPath, JSON.stringify(script, null, 2), 'utf8');
   }
 
   async getStorageSummary(): Promise<{ projectsRoot: string; totalProjects: number }> {
@@ -125,9 +140,20 @@ export class ProjectStoreService {
 
     const script: ProjectScript = {
       projectId,
+      title: '',
+      topic: '',
+      prompt: '',
+      language: 'es',
+      duration: 60,
+      niche: '',
+      tone: '',
+      hook: '',
+      script: '',
+      estimatedDuration: 0,
+      scenes: [],
+      cta: '',
       hookOptions: [],
       selectedHookId: null,
-      scenes: [],
       updatedAt: timestamp
     };
 
