@@ -20,6 +20,17 @@ export type GenerationStage =
   | 'composition'
   | 'render';
 
+export type SupportedScriptDuration = 30 | 45 | 60 | 90;
+
+export type HookTechnique =
+  | 'curiosidad'
+  | 'pregunta inesperada'
+  | 'afirmación sorprendente pero verificable'
+  | 'contraste'
+  | 'open loop'
+  | 'descubrimiento'
+  | 'historia incompleta';
+
 export interface ProjectPaths {
   readonly audio: string;
   readonly images: string;
@@ -44,22 +55,36 @@ export interface VideoProject {
 export interface HookOption {
   readonly id: string;
   readonly text: string;
+  readonly technique: HookTechnique;
   readonly score: number;
+  readonly rationale: string;
 }
 
 export interface ScriptScene {
   readonly id: string;
-  readonly order: number;
   readonly narration: string;
+  readonly duration: number;
   readonly visualPrompt: string;
-  readonly durationSeconds: number;
+  readonly caption: string;
+  readonly transition: string;
 }
 
 export interface ProjectScript {
   readonly projectId: string;
+  readonly title: string;
+  readonly topic: string;
+  readonly prompt: string;
+  readonly language: string;
+  readonly duration: SupportedScriptDuration;
+  readonly niche: string;
+  readonly tone: string;
+  readonly hook: string;
+  readonly script: string;
+  readonly estimatedDuration: number;
+  readonly scenes: ScriptScene[];
+  readonly cta: string;
   readonly hookOptions: HookOption[];
   readonly selectedHookId: string | null;
-  readonly scenes: ScriptScene[];
   readonly updatedAt: string;
 }
 
@@ -67,6 +92,15 @@ export interface CreateProjectInput {
   readonly idea: string;
   readonly title?: string;
   readonly durationSeconds?: number;
+}
+
+export interface ScriptGenerationInput {
+  readonly projectId: string;
+  readonly prompt: string;
+  readonly language: string;
+  readonly duration: SupportedScriptDuration;
+  readonly niche: string;
+  readonly tone: string;
 }
 
 export interface GenerationJob {

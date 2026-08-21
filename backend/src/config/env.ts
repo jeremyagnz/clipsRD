@@ -24,6 +24,7 @@ export const env = {
   corsOrigin: process.env.CORS_ORIGIN?.trim() || 'http://localhost:4200',
   projectsRoot: process.env.PROJECTS_ROOT?.trim() || resolve(repositoryRoot, 'generated/projects'),
   ollamaBaseUrl: process.env.OLLAMA_BASE_URL?.trim() || 'http://127.0.0.1:11434',
+  ollamaModel: process.env.OLLAMA_MODEL?.trim() || 'llama3.1:8b',
   piperBinaryPath: process.env.PIPER_BINARY_PATH?.trim() || '/usr/local/bin/piper',
   imageProviderMode: process.env.IMAGE_PROVIDER_MODE?.trim() || 'local'
 } as const;
