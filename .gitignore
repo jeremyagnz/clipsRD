@@ -1,0 +1,14 @@
+frontend/node_modules/
+frontend/.angular/
+frontend/dist/
+backend/node_modules/
+backend/dist/
+generated/projects/**
+!generated/projects/.gitkeep
+models/**
+!models/.gitkeep
+temp/**
+!temp/.gitkeep
+.env
+backend/.env
+npm-debug.log*

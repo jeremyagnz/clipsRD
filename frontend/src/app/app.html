@@ -1,0 +1,66 @@
+<mat-toolbar class="topbar">
+  <span>{{ title }}</span>
+  <span class="toolbar-spacer"></span>
+  <button mat-stroked-button color="primary">Stack local-first</button>
+</mat-toolbar>
+
+<main class="page-shell">
+  <section class="hero-card">
+    <div class="hero-copy">
+      <span class="eyebrow">Angular + Node.js + IA local + FFmpeg</span>
+      <h1>Convierte una idea en un video vertical listo para Shorts.</h1>
+      <p>
+        El proyecto queda preparado para recibir un prompt, orquestar jobs asíncronos
+        y persistir cada entrega como archivos JSON más assets locales.
+      </p>
+
+      <div class="chips">
+        @for (stage of stages; track stage) {
+          <mat-chip>{{ stage }}</mat-chip>
+        }
+      </div>
+    </div>
+
+    <mat-card appearance="outlined" class="status-card">
+      <mat-card-header>
+        <mat-card-title>Estado inicial</mat-card-title>
+        <mat-card-subtitle>Scaffold listo para la siguiente iteración</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-progress-bar mode="determinate" value="35"></mat-progress-bar>
+        <p class="status-copy">
+          Se configuraron las bases del frontend, backend, almacenamiento por archivos
+          y despliegue estático con Netlify para el panel Angular.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <section class="content-grid">
+    @for (capability of capabilities; track capability.title) {
+      <mat-card appearance="outlined" class="feature-card">
+        <mat-card-header>
+          <mat-card-title>{{ capability.title }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ capability.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </section>
+
+  <mat-card appearance="outlined" class="milestones-card">
+    <mat-card-header>
+      <mat-card-title>Próximo entregable controlado</mat-card-title>
+      <mat-card-subtitle>Sin avanzar todavía al pipeline completo</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        @for (milestone of milestones; track milestone) {
+          <mat-list-item>{{ milestone }}</mat-list-item>
+          <mat-divider></mat-divider>
+        }
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</main>
