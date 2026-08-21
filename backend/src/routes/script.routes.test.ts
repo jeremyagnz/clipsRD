@@ -66,7 +66,7 @@ test('POST /api/script/generate genera y persiste el script del proyecto', async
         title: 'Cómo tu cerebro rellena huecos',
         topic: 'percepción y cerebro',
         hook: 'Tu cerebro rellena huecos todo el tiempo.',
-        script: 'Tu cerebro rellena huecos todo el tiempo. Cuando algo falta, intenta completar la escena en milisegundos. Por eso a veces juras haber visto o escuchado algo que no estaba completo. No es magia. Es una herramienta de ahorro mental. El problema es que también puede engañarte. Si quieres más ciencia contada simple, sígueme.',
+        script: 'Tu cerebro rellena huecos todo el tiempo. Cuando algo falta, intenta completar la escena en milisegundos. Lo hace para ayudarte a reaccionar rápido y entender lo que ves sin detenerte a analizar cada detalle. Por eso a veces juras haber visto o escuchado algo que no estaba completo. No es magia. Es una herramienta de ahorro mental que normalmente te ayuda. El problema es que también puede engañarte cuando la información llega cortada, borrosa o demasiado rápido. Ahí nacen varias ilusiones y errores de percepción. Si quieres más ciencia contada simple, sígueme.',
         cta: 'Si quieres más ciencia contada simple, sígueme.',
         scenes: [
           { id: 'scene-1', narration: 'Tu cerebro rellena huecos todo el tiempo.', duration: 8, visualPrompt: 'Persona observando una escena incompleta que el cerebro completa visualmente', caption: 'Tu cerebro completa', transition: 'cut' },
